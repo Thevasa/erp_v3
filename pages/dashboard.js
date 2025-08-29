@@ -11,14 +11,17 @@ export default function Dashboard() {
     (async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) { window.location.href = "/login"; return; }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!mounted) return;
       setUser(user);
+
       const { data, error } = await supabase
         .from("profiles")
         .select("role")
         .eq("user_id", user.id)
         .single();
+
       if (!mounted) return;
       setRole(data?.role ?? "operator");
       setLoading(false);
@@ -26,24 +29,17 @@ export default function Dashboard() {
     return () => { mounted = false; };
   }, []);
 
-  if (loading) return <main style={{ padding: 24 }}>Loading…</main>;
+  async function handleSignOut() {
+    await supabase.auth.signOut({ scope: "local" });
+    window.location.href = "/login";
+  }
+
+  if (loading) {
+    return <main style={{ padding: 24 }}>Loading…</main>;
+  }
 
   return (
     <main style={{ padding: 24, fontFamily: "system-ui, sans-serif" }}>
       <h1>Dashboard</h1>
-      <p>User: {user?.email}</p>
-      <p>Role: <strong>{role}</strong></p>
-      <p><a href="/api/inventory">View inventory JSON →</a></p>
-      {role === "admin" ? (
-        <p>You are admin. Here you could add CRUD UI for inventory.</p>
-      ) : (
-        <p>You are operator. Read-only access enforced by RLS.</p>
-      )}
-      import SignOutButton from "../components/SignOutButton";
-// ...
-<button onClick={() => {}} style={{ display: "none" }} />
-<SignOutButton />
+      <p>User:
 
-    </main>
-  );
-}
