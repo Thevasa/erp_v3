@@ -1,3 +1,4 @@
+// pages/logout.js
 import { useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
 
@@ -11,10 +12,5 @@ export default function Logout() {
       }
     })();
   }, []);
-
-  return (
-    <main style={{ padding: 24, fontFamily: "system-ui, sans-serif" }}>
-      Signing out…
-    </main>
-  );
+  return <main style={{ padding: 24 }}>Signing out…</main>;
 }
