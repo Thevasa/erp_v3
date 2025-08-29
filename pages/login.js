@@ -30,3 +30,15 @@ export default function Login() {
     </main>
   );
 }
+import SignOutButton from "../components/SignOutButton";
+// ...
+if (session) {
+  return (
+    <main style={{ padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <h1>Signed in</h1>
+      <p><a href="/dashboard">Go to dashboard →</a></p>
+      <SignOutButton />
+    </main>
+  );
+}
+
