@@ -21,6 +21,7 @@ export default function Dashboard() {
         .select("role")
         .eq("user_id", user.id)
         .single();
+      if (error) console.error(error);
 
       if (!mounted) return;
       setRole(data?.role ?? "operator");
@@ -41,5 +42,18 @@ export default function Dashboard() {
   return (
     <main style={{ padding: 24, fontFamily: "system-ui, sans-serif" }}>
       <h1>Dashboard</h1>
-      <p>User:
+      <p>User: {user?.email}</p>
+      <p>Role: <strong>{role}</strong></p>
 
+      <p><a href="/inventory">Inventory (read-only) →</a></p>
+      <p><a href="/admin/inventory">Admin inventory →</a></p>
+      <p><a href="/api/inventory">Inventory API (JSON) →</a></p>
+
+      <p>
+        <button type="button" onClick={handleSignOut}>Sign out</button>
+        {" "}or{" "}
+        <a href="/logout">use logout link</a>
+      </p>
+    </main>
+  );
+}
