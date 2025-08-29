@@ -39,7 +39,11 @@ export default function Dashboard() {
       ) : (
         <p>You are operator. Read-only access enforced by RLS.</p>
       )}
-      <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+      import SignOutButton from "../components/SignOutButton";
+// ...
+<button onClick={() => {}} style={{ display: "none" }} />
+<SignOutButton />
+
     </main>
   );
 }
